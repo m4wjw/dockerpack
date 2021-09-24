@@ -1,0 +1,49 @@
+#!/bin/bash
+# Editor: Sam
+# Ver: 1.1
+# Syntax: dockerpack {root path of packages}
+
+# Check whether the user has enter the parameter of path.
+if [ -z $1 ]
+then
+    echo -e "\033[31mPlease enter the path of the dockerfile. \033[0m"
+    exit 1
+fi
+
+# Check whether the path is existing.
+if [ ! -d $1 ]
+then 
+    echo -e "\033[31mPlease enter a existing path or a directory. \033[0m"
+    exit 2
+fi
+
+dockerfile_list=$(ls $1)
+if [ -z "$dockerfile_list" ]
+then
+    echo -e "\033[31mThis is a blank directory.\033[0m"
+    exit 3
+fi
+
+timestamp=$(date +"%s")
+
+cd $1
+for a in $dockerfile_list
+do
+    cd $a
+    if [ -e Dockerfile ]
+    then
+        docker build -t $(basename `pwd`):$(date +"%Y%m%d.%H%M%S") . >> /tmp/dockerbuild.$timestamp
+        if [ "$?" -ne 0 ]
+        then 
+            echo -e "\033[31mBuild failed!!!\033[0m"
+            cd ..
+            continue
+        fi
+        cd ..
+    else
+        echo -e "\033[31mDockerfile doesn't exist in `pwd`.\033[0m"
+        cd ..
+        continue
+    fi
+done
+echo -e "\033[32mComplete!!!\033[0m"
