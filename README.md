@@ -1,5 +1,4 @@
 # dockerpack
-Automatic dockerpack
 Editor: Sam
 ***
 ## 1. Profile
