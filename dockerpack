@@ -53,6 +53,10 @@ do
     fi
 done
 echo -e "\033[1;4mComplete!!!\033[0m"
+if [ $success -ne 0 ]
+then
+    echo -e "You could find the log emitted by docker during the packing in \033[1m/tmp/dockerbuild.$timestamp\033[0m"
+fi
 echo -e "\033[32;1mSuccess :    $success\033[0m"
 echo -e "\033[35;1mFailure :    $failure\033[0m"
 echo -e "\033[35;1mError   :    $error\033[0m"
