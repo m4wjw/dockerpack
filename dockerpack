@@ -1,6 +1,6 @@
 #!/bin/bash
 # Editor: Sam
-# Ver: 1.2
+# Ver: 1.3
 # Syntax: dockerpack {root path of packages}
 
 # Check whether the user has enter the parameter of path.
