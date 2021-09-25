@@ -1,6 +1,6 @@
 #!/bin/bash
 # Editor: Sam
-# Ver: 1.1
+# Ver: 1.2
 # Syntax: dockerpack {root path of packages}
 
 # Check whether the user has enter the parameter of path.
@@ -25,6 +25,9 @@ then
 fi
 
 timestamp=$(date +"%s")
+success=0
+failure=0
+error=0
 
 cd $1
 for a in $dockerfile_list
@@ -33,17 +36,24 @@ do
     if [ -e Dockerfile ]
     then
         docker build -t $(basename `pwd`):$(date +"%Y%m%d.%H%M%S") . >> /tmp/dockerbuild.$timestamp
+	success=$(($success+1))
         if [ "$?" -ne 0 ]
         then 
             echo -e "\033[31mBuild failed!!!\033[0m"
+            failure=$(($failure+1))
             cd ..
             continue
         fi
         cd ..
     else
         echo -e "\033[31mDockerfile doesn't exist in `pwd`.\033[0m"
+        error=$(($error+1))
         cd ..
         continue
     fi
 done
-echo -e "\033[32mComplete!!!\033[0m"
+echo -e "\033[1;4mComplete!!!\033[0m"
+echo -e "\033[32;1mSuccess :    $success\033[0m"
+echo -e "\033[35;1mFailure :    $failure\033[0m"
+echo -e "\033[35;1mError   :    $error\033[0m"
+
