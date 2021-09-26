@@ -20,7 +20,10 @@ mv ./dockerpack /usr/bin/
 1. You should confirm that the file "Dockerfile" is existing in each package.
 2. The "Dockerfile" must be named as "Dockerfile".
 ### 3.1 Syntax
-`dockerpack {the present path of the packages}`
+`dockerpack {the present path of the packages} <-v>`
+```shell
+-v : verbose
+```
 ### 3.2 Logs
 You could find the functioning log in /tmp
 ### 3.3 Results
